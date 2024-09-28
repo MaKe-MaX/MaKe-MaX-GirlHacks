@@ -1,13 +1,21 @@
 import pygame
 
-class Entity:
+import const
 
-    def __init__(self, name, pygame_obj, callbacks, clickable=False, collidable=False):
+class Entity(pygame.sprite.Sprite):
+
+    def __init__(self, name="", size = (50, 50), color=const.color["WHITE"], callbacks={}, 
+                 clickable=False, collidable=False, img = None):
+        
         self.callbacks = callbacks
-        self.pygame_obj = pygame_obj
         self.clickable = clickable
         self.collidable = collidable
         self.name = name
+
+        self.img = pygame.Surface(size)
+        self.img.fill(color)
+
+        self.rect = self.img.get_rect()
 
     def update(self, events, collide_ent=None):
         x = self.pygame_obj.x

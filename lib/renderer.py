@@ -1,16 +1,13 @@
 import pygame
 import os
 import lib
-import lib.variables
 
 class Renderer:
 
-    def __init__(self, window_width, window_height, screen):
-        pass
+    def __init__(self):
 
-    def start(self):
-
-        os.environ['SDL_VIDEO_CENTERED'] = 1
+        # Centers video
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
 
         # Initialize pygame
         pygame.init()
@@ -23,61 +20,50 @@ class Renderer:
         self.screen = pygame.display.set_mode((self.window_width - 10, self.window_height - 50), pygame.RESIZABLE)
 
         # Fill the screen with black
-        self.screen.fill(lib.color["BLACK"])
+        self.screen.fill(lib.const.color["BLACK"])
 
         pygame.display.set_caption('DiscoWrld')
 
-        """# Get keys pressed 
-            keys = pygame.key.get_pressed()
-            
-            # Update square position based on arrow key input
-            if keys[pygame.K_LEFT]:
-                x -= self.speed
-            if keys[pygame.K_RIGHT]:
-                x += self.speed
-            if keys[pygame.K_UP]:
-                y -= self.speed
-            if keys[pygame.K_DOWN]:
-                y += self.speed"""
+        # Get keys pressed 
+        # keys = pygame.key.get_pressed()
+        
+        # # Update square position based on arrow key input
+        # if keys[pygame.K_LEFT]:
+        #     x -= self.speed
+        # if keys[pygame.K_RIGHT]:
+        #     x += self.speed
+        # if keys[pygame.K_UP]:
+        #     y -= self.speed
+        # if keys[pygame.K_DOWN]:
+        #     y += self.speed
 
     # Displays a sprite 
-    def display_entities(entities):
+    # len(pygame_objs) = len(pos_list)
+    def display_pygameObjs(self, pygame_objs, pos_list = [(0,0)]):
+
         group = pygame.sprite.Group()
-        for e in entities:
-            if(isinstance(e.pygameObj, pygame.sprite)):
-                group.add(e.pygameObj)
-            else:
-                e.pygameObj.blit()
-        group.draw();
+        for i,e in enumerate(pygame_objs):
+            if(isinstance(e, pygame.sprite.Sprite)):
+                group.add(e)
+            elif(isinstance(e, pygame.Surface)):
+                e.blit(self.screen, pos_list[i])
+        group.draw(self.screen)
     
     def display_screen(self, attributes):
-        self.screen.blit();
-    
-    def display_text(self, textPosTuple, screentype):
+        self.screen.blit()
 
+    # (text, color, (x,y)), font,  backdrop
+    def display_text(self, text_color_pos_tuples = [("",lib.const.color["WHITE"],(0, 0))], font = lib.const.font["GAMEOVER"], backdrop = None):
+            for tcp in text_color_pos_tuples:
+                self.screen.blit( font.render(tcp[0], True, tcp[1], backdrop), tcp[2] )
 
-        if(screentype == lib.variables.ScreenType["GAMEOVER"]):
-            self.screen.fill(lib.BLACK)
-            font = lib.variables.Font["GAMEOVER"]
-
-            for tp in textPosTuple():
-                self.screen.blit(font.render(tp[0], True, lib.misc.colors('WHITE')), tp[1])
-
-           # renderTexts = [font.render(t[0], True, lib.misc.colors('WHITE')) for t in textPosTuple]
-            #renderPos = [pos for pos in textPosTuple]
-            
-            for i in range()
-            self.screen.blit(renderTexts[0], (self.window_width // 2 - 100, self.window_height // 2 - 100))
-            self.screen.blit(renderTexts[1], (self.window_width // 2 - 150, self.window_height // 2))
-            self.screen.blit(renderTexts[2], (self.window_width // 2 - 150, self.window_height // 2 + 50))
-
-    def update():
+    def update(self):
 
         # Update the display
         pygame.display.update()
     
         # Control the frame rate
-        pygame.time.Clock().tick(12)
+        pygame.time.Clock().tick(lib.const.frame_rate)
             
         
 
