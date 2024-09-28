@@ -6,7 +6,7 @@ from ..entity import Entity
 
 class Tile(Entity):
 
-    def __init__(self, name, ):
+    def __init__(self, name):
         super().__init__(name)
         pass
 

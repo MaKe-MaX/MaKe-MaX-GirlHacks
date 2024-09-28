@@ -3,7 +3,6 @@ import pygame
 color = {
         "BLACK": pygame.Color(0, 0, 0), 
         "RED": pygame.Color(200, 0, 6),
-        "BLUE": pygame.Color(0, 0, 255),
         "WHITE": pygame.Color(223,224,221),
         "YELLOW": pygame.Color(215, 216, 54),
         "TEAL": pygame.Color(4, 212, 150), 

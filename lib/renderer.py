@@ -39,14 +39,11 @@ class Renderer:
 
     # Displays a sprite 
     # len(pygame_objs) = len(pos_list)
-    def display_pygameObjs(self, pygame_objs, pos_list = [(0,0)]):
+    def display_entities(self, entities):
 
         group = pygame.sprite.Group()
-        for i,e in enumerate(pygame_objs):
-            if(isinstance(e, pygame.sprite.Sprite)):
-                group.add(e)
-            elif(isinstance(e, pygame.Surface)):
-                e.blit(self.screen, pos_list[i])
+        for e in entities:
+            group.add(e)
         group.draw(self.screen)
     
     def display_screen(self, attributes):

@@ -4,11 +4,11 @@ import time
 import renderer
 from entity import Entity
 
-class Player(pygame.sprite.Sprite):
+class Player(Entity):
     def __init__(self):
         super.__init__("Jimmy", pygame.sprite.Sprite())
-        self.left = [pygame.transform.flip(pygame.image.load('data/images/idle/idle1.png'), False, False)]*4 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle2.png'), False, False)]*1 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle3.png'), False, False)]*4 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle4.png'), False, False)]*1
-        self.right = [pygame.transform.flip(pygame.image.load('data/images/idle/idle1.png'), True, False)]*4 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle2.png'), True, False)]*1 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle3.png'), True, False)]*4 + [pygame.transform.flip(pygame.image.load('data/images/idle/idle4.png'), True, False)]*1
+        self.left = [pygame.transform.flip(pygame.image.load('../assets/player/1.png'), False, False)]*4 + [pygame.transform.flip(pygame.image.load('../assets/player/2.png'), False, False)]*1 + [pygame.transform.flip(pygame.image.load('../assets/player/3.png'), False, False)]*4 + [pygame.transform.flip(pygame.image.load('../assets/player/4.png'), False, False)]*1
+        self.right = [pygame.transform.flip(pygame.image.load('../assets/player/1.png'), True, False)]*4 + [pygame.transform.flip(pygame.image.load('../assets/player/2.png'), True, False)]*1 + [pygame.transform.flip(pygame.image.load('../assets/player/3.png'), True, False)]*4 + [pygame.transform.flip(pygame.image.load('../assets/player/4.png'), True, False)]*1
         self.frame = 0
 
         self.imgList = self.left

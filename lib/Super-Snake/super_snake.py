@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import const
 
 from ..game import Game
 from ..entity import Entity
@@ -23,18 +24,15 @@ class Snake:
         self.head = self.segments [0]
 
     def create(self):
-        for pos in [(), (), ()]:
-            new_seg = Entity()
+        for pos in [(10,100), (120,100), (140,100)]:
+            new_seg = Entity(pos = pos, size = (20,20), color = const.color['GREEN'])
             self.segments.append(new_seg)
     
     def extend(self):
-        new_seg = Entity()
-        new_seg.pos = self.segments[-1].pos
+        new_seg = Entity(pos = self.segments[-1].pos, size = (20,20), color = const.color['GREEN'])
         self.segments.append(new_seg)
 
     def move(self):
         for seg_num in range(len(self.segments)-1, 0, -1):
-            new_x = self.segments[seg_num-1].xcor()
-            new_y = self.segments[seg_num-1].ycor()
-            self.segments.goto[new_x,new_y]
+            self.segments.pos = self.segments[seg_num-1].pos
             
