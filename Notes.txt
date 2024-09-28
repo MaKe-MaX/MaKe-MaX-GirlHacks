@@ -1,5 +1,15 @@
 IMPORTANT: add "py -m" before pygbag command; for some reason that works
 
+The OOP Plan ("and I OOP!"):
+* Master Game class with 3 Mini Game
+    * std color vars: red, green, yellow, cyan, purple, cyan, magenta, orange, turquoise, white, black
+*   run function that can be called during a hub interaction (open window, start etc.) (make a sub-loop)
+*   automatically start on the first key input maybe? (or a title screen)
+*   game over screen where you can play again or exit back to the hub
+*   high score attribute
+* Render class (one obj, passed into each game instance)
+* var guidelines: class names in PascalCase, everything else in snake_case
+
 MARCUS
 The Hub
     - Walking to different areas of the disco floor, brings you to the 3 different games
@@ -19,6 +29,7 @@ Game 2: Disco Dance
     - when clicked at the right time you get points
     - guy dances based on key presses
     - collecting disco ball gives you rainbow super speed and point multiplier
+    - Progressive difficulty spike
 
 KRISH
 Game 3: Memory Mania
