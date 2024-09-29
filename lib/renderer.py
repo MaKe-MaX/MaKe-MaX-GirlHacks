@@ -53,7 +53,7 @@ class Renderer:
         """
         rectList.update()
         # Update the display
-        pygame.display.flip()
+        pygame.display.update()
     
         # Control the frame rate
         pygame.time.Clock().tick(lib.const.frame_rate)
