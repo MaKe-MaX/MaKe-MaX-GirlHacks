@@ -24,8 +24,8 @@ class Arcade:
             self.img = self.on_imgs[self.frame]
             self.frame = (self.frame + 1) % (len(self.on_imgs))      # switches on images back & forth
 
-            # keys = pygame.key.get_pressed()
-            # if keys[pygame.K_E]
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_E]
         else:
             self.img = self.off_img
 
