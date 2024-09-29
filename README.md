@@ -7,3 +7,5 @@ Note:
 * The snake arcade machine is fully functional
 * The memory mania machine is in beta
 * The disco dancer machine is coming soon
+
+[Check out our website](https://disgodaddies.club/)
