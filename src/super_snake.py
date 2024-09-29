@@ -1,6 +1,6 @@
 import pygame
 from random import randint
-import random
+import os, time
 
 # Constants
 GRID_SIZE = 16  # 16x16 grid
@@ -34,6 +34,7 @@ class SuperSnake:
                 self.is_game_over = True
 
     def run(self):
+        time.sleep(0.1)
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.KEYDOWN:
@@ -73,23 +74,23 @@ class Snake:
             new_seg = Segment(pos=position, tile_size=tile_size, heading=0)
             self.segments.append(new_seg)
         self.head = self.segments[0]
-        self.head.type = "head"
+        self.head.updateImage(type = "head")
         self.tail = self.segments[-1]
-        self.tail.type = "tail"
+        self.tail.updateImage(type = "tail")
 
     def extend(self):
         last_segment = self.segments[-1]
         new_seg = Segment(pos=(last_segment.rect.x, last_segment.rect.y), 
                           tile_size=self.tile_size, 
                           heading=last_segment.heading)
-        self.segments[-1].type = "body"
+        self.segments[-1].updateImage(type = "body")
         self.segments.append(new_seg)
-        self.segments[-1].type = "tail"
+        self.segments[-1].updateImage(type = "tail")
 
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
             self.segments[seg_num].rect.topleft = self.segments[seg_num - 1].rect.topleft
-            self.segments[seg_num].heading = self.segments[seg_num - 1].heading
+            self.segments[seg_num].updateImage(heading = self.segments[seg_num - 1].heading)
 
         # Move head based on heading
         if self.head.heading == 90:
@@ -103,19 +104,19 @@ class Snake:
 
     def up(self):
         if self.head.heading != 270:
-            self.head.heading = 90
+            self.head.updateImage(heading = 90)
 
     def down(self):
         if self.head.heading != 90:
-            self.head.heading = 270
+            self.head.updateImage(heading = 270)
 
     def left(self):
         if self.head.heading != 0:
-            self.head.heading = 180
+            self.head.updateImage(heading = 180)
 
     def right(self):
         if self.head.heading != 180:
-            self.head.heading = 0
+            self.head.updateImage(heading = 0)
 
     def clear(self):
         for seg in self.segments:
@@ -124,13 +125,21 @@ class Snake:
 
 
 class Segment(pygame.sprite.Sprite):
-    def __init__(self, type="body", pos=(0, 0), heading=0):
+    def __init__(self, type="body", pos=(0, 0), heading=0, tile_size = 20):
         super().__init__()
         self.type = type
         self.heading = heading
-        self.img = pygame.image.load(f"../assets/snake/{type}_{heading}.png")
+        self.tile_size = tile_size
+        self.img = pygame.transform.scale(pygame.image.load(os.path.join('assets/snake', f'{type}_{heading}.png')), (tile_size, tile_size))
         self.rect = self.img.get_rect(topleft=pos)
 
+    def updateImage(self, type = None, heading = None):
+        if type != None:
+            self.type = type
+        if heading != None:
+            self.heading = heading
+        self.img = pygame.transform.scale(pygame.image.load(os.path.join('assets/snake', f'{self.type}_{self.heading}.png')), (self.tile_size, self.tile_size))
+    
     def update(self, screen):
         screen.blit(self.img, self.rect.topleft)
 
@@ -140,7 +149,7 @@ class Food:
         self.tile_size = tile_size
         self.screen_width = screen_width
         self.screen_height = screen_height
-        self.img = pygame.image.load(f"../assets/snake/vinyl{random.randint(1,4)}.png")
+        self.img = pygame.image.load(os.path.join('assets/snake', f'vinyl{randint(1,4)}.png'))
         self.rect = self.img.get_rect()
         self.randomize_position()
 

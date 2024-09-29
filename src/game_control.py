@@ -23,7 +23,7 @@ def game_over_screen(score):        # returns whether to restart
                 if keys[pygame.K_h]:
                     return False
                 pygame.mixer.init()
-                sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+                sound = pygame.mixer.Sound(os.path.join('assets/music', 'track1.mp3') )
                 pygame.mixer.music.set_volume(0.5)
                 sound.play()
 
@@ -32,29 +32,33 @@ def quit_management():
     for event in events:
         if event.type == pygame.QUIT:
             pygame.mixer.init()
-            sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+            sound = pygame.mixer.Sound(os.path.join('assets/music', 'track1.mp3') )
             pygame.mixer.music.set_volume(0.5)
             sound.play()
+            pygame.quit()
+            sys.exit()
             return True
         if event.type == pygame.KEYDOWN:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_m]:
                 pygame.mixer.init()
-                sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+                sound = pygame.mixer.Sound(os.path.join('assets/music', 'track1.mp3') )
                 pygame.mixer.music.set_volume(0.5)
                 sound.play()
+                pygame.quit()
+                sys.exit()
                 return True
 
 # --------------- Main Game Loop  -------------- #
 def run():
 
     # ------- player image & walking frames ------- #
-    file_names = [f'../assets/player/{i}.png' for i in range(1,5)]
+    file_names = [os.path.join('assets/player', f'{i}.png') for i in range(1,5)]
     frame = 0
 
     
 
-    floor_list = [pygame.image.load("../assets/arcade/disco_floor1.png")]*6  + [pygame.image.load(f"../assets/arcade/disco_floor2.png")]*6
+    floor_list = [pygame.image.load(os.path.join('assets/arcade', 'disco_floor1.png'))]*6  + [pygame.image.load(os.path.join('assets/arcade', 'disco_floor2.png'))]*6
     left = [pygame.image.load(file_names[0])]*5 + [pygame.image.load(file_names[1])]*1 + [pygame.image.load(file_names[2])]*5 + [pygame.image.load(file_names[3])]*1
     right = [pygame.transform.flip(pygame.image.load(file_names[0]), True, False)]*5 + [pygame.transform.flip(pygame.image.load(file_names[1]), True, False)]*1 + [pygame.transform.flip(pygame.image.load(file_names[2]), True, False)]*5 + [pygame.transform.flip(pygame.image.load(file_names[3]), True, False)]*1
     imgList = left
@@ -72,7 +76,6 @@ def run():
     clock = pygame.time.Clock()
     
     while running:
-        #pygame.time.delay(100)
         events = pygame.event.get()
 
         for e in events:
@@ -137,9 +140,8 @@ def run():
                         quit = True
                         break
 
-                    # here is code of the game
+                    screen.fill(pygame.Color(0, 0, 0))
                     inst.run()
-                    screen.fill(pygame.Color(255, 0, 255))
                     clock.tick(12)
                     pygame.display.update()
                 if not quit and not game_over_screen(0):

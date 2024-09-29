@@ -8,8 +8,8 @@ class Arcade:
         self.x = pos[0]
         self.y = pos[1]
         self.pos = pos
-        self.off_img =  pygame.transform.scale(pygame.image.load(f'../assets/arcade/{name}_off.png'), (Arcade.size,Arcade.size))
-        self.on_imgs = [pygame.transform.scale(pygame.image.load(f'../assets/arcade/{name}_on1.png'), (Arcade.size, Arcade.size))]*6 + [pygame.transform.scale(pygame.image.load(f'../assets/arcade/{name}_on2.png'), (Arcade.size, Arcade.size))]*6
+        self.off_img =  pygame.transform.scale(pygame.image.load(os.path.join('assets/arcade/', f'{name}_off.png')), (Arcade.size,Arcade.size))
+        self.on_imgs = [pygame.transform.scale(pygame.image.load(os.path.join('assets/arcade/', f'{name}_on1.png')), (Arcade.size, Arcade.size))]*6 + [pygame.transform.scale(pygame.image.load(os.path.join('assets/arcade/', f'{name}_on2.png')), (Arcade.size, Arcade.size))]*6
         self.frame = 0
         self.img = self.off_img     # current img
 
