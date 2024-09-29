@@ -34,8 +34,8 @@ class Tile(Entity):
     
 
 class MemoryMania(Game):
-    tile_margin = 10
-    tile_size = 50
+    tile_margin = 15
+    tile_size = 100
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

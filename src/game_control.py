@@ -3,16 +3,19 @@ from arcade import Arcade
 from disco_dance import DiscoDance
 from memory_mania import MemoryMania
 from super_snake import SuperSnake
+import const
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
 
 # ------------------ Game Over ----------------- #
 def game_over_screen(score):        # returns whether to restart
-    screen.fill(pygame.Color(255, 0, 0))
-    print("Game over!")
-    print("Press `r` to restart or `h` to return to the hub")
-
+    screen.fill(pygame.Color(0, 0, 0))
+    text_color_pos_tuples = [("GAME OVER",const.color["WHITE"],(0, 0)), ("Press `r` to restart or `h` to return to the hub",const.color["WHITE"],(100, 100))]
+    font = const.font["GAMEOVER"]
+    backdrop = None
+    for tcp in text_color_pos_tuples:
+        screen.blit( font.render(tcp[0], True, tcp[1], backdrop), tcp[2] )
     while True:
         events = pygame.event.get()
         for event in events:
@@ -179,8 +182,8 @@ def run():
 
                     # here is code of the game
                     
-                    mem_game.update()
                     screen.fill(pygame.Color(255, 0, 255))
+                    mem_game.update()
                     clock.tick(12)
                     pygame.display.update()
                 if not quit and not game_over_screen(0):

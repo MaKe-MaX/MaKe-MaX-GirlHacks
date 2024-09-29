@@ -44,11 +44,22 @@ class MemoryMania:
     tile_margin = 10
     tile_size = 50
     Tile.size = tile_size
+    tile_sleep = 1 # in s
 
     def __init__(self, screen):
-        pos = MemoryMania.__generate_tile_pos({"x": screen.get_width() // 2, "y": screen.get_height() // 2})
-        colors = set(const.color.values())
-        self.tiles = [Tile(i, pos[i], colors.pop(), self.__tile_callback) for i in range(0, 9)]
+        pos = MemoryMania.__generate_tile_pos((screen.get_width() // 2, screen.get_height() // 2))
+        
+        colors = []
+        count = 0
+        chosen_color = const.color["RED"]
+
+        for _ in range(9):
+            while chosen_color in colors:
+                chosen_color = random.choice(list(const.color.values()))
+            colors.append(chosen_color)
+        
+        self.screen = screen
+        self.tiles = [Tile(i, pos[i], colors[i], self.__tile_callback) for i in range(0, 9)]
         self.correct_sequence = []
         self.player_sequence = []
         self.waiting = False
@@ -67,9 +78,9 @@ class MemoryMania:
             # show sequence
             for n in self.correct_sequence:
                 self.tiles[n].turn_on()
-                time.sleep(self.tile_sleep)
+                time.sleep(MemoryMania.tile_sleep)
                 self.tiles[n].turn_off()
-                time.sleep(self.tile_sleep / 2)
+                time.sleep(MemoryMania.tile_sleep / 2)
 
             # let user click
             for tile in self.tiles:
@@ -103,13 +114,13 @@ class MemoryMania:
     @classmethod
     def __generate_tile_pos(cls, center_pos):
         return [
-            (center_pos.x - cls.tile_size - cls.tile_margin, center_pos.y - cls.tile_size - cls.tile_margin),
-            (center_pos.x, center_pos.y - cls.tile_size - cls.tile_margin),
-            (center_pos.x + cls.tile_size + cls.tile_margin, center_pos.y - cls.tile_size - cls.tile_margin),
-            (center_pos.x - cls.tile_size - cls.tile_margin, center_pos.y),
+            (center_pos[0] - cls.tile_size - cls.tile_margin, center_pos[1] - cls.tile_size - cls.tile_margin),
+            (center_pos[0], center_pos[1] - cls.tile_size - cls.tile_margin),
+            (center_pos[0] + cls.tile_size + cls.tile_margin, center_pos[1] - cls.tile_size - cls.tile_margin),
+            (center_pos[0] - cls.tile_size - cls.tile_margin, center_pos[1]),
             center_pos,
-            (center_pos.x + cls.tile_size + cls.tile_margin, center_pos.y),
-            (center_pos.x - cls.tile_size - cls.tile_margin, center_pos.y + cls.tile_size + cls.tile_margin),
-            (center_pos.x, center_pos.y + cls.tile_size + cls.tile_margin),
-            (center_pos.x + cls.tile_size + cls.tile_margin, center_pos.y + cls.tile_size + cls.tile_margin)
+            (center_pos[0] + cls.tile_size + cls.tile_margin, center_pos[1]),
+            (center_pos[0] - cls.tile_size - cls.tile_margin, center_pos[1] + cls.tile_size + cls.tile_margin),
+            (center_pos[0], center_pos[1] + cls.tile_size + cls.tile_margin),
+            (center_pos[0] + cls.tile_size + cls.tile_margin, center_pos[1] + cls.tile_size + cls.tile_margin)
         ]

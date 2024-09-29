@@ -7,7 +7,7 @@ import os
 
 pygame.mixer.init()
 pygame.mixer.music.set_volume(0.25)
-sound = pygame.mixer.Sound(os.path.join('assets/music', 'track1.mp3') )
+sound = pygame.mixer.Sound(os.path.join('assets/music', 'track1.mp3'))
 sound.play()
 
 
