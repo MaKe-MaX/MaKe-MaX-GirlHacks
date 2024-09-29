@@ -1,2 +1,9 @@
 # MaKe-MaX-GirlHacks
-The Repo for our 2D disco pygame HAck for 2024 GirlHacks
+M = Matthew, K = Krish, M = Marcus, X = Xhaiden
+
+The Repo for our 2D disco pygame hack for 2024 GirlHacks
+
+Note:
+* The snake arcade machine is fully functional
+* The memory mania machine is in beta
+* The disco dancer machine is coming soon

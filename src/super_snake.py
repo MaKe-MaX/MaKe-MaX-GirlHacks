@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 import os, time
+import const
 
 # Constants
 GRID_SIZE = 16  # 16x16 grid
@@ -22,16 +23,28 @@ class SuperSnake:
             self.score += 10
 
     def check_wall_collision(self):
-        if (self.snake.head.rect.x < 0 or 
-            self.snake.head.rect.x >= self.screen.get_width() or 
-            self.snake.head.rect.y < 0 or 
-            self.snake.head.rect.y >= self.screen.get_height()):
+        # print(self.snake.head.rect.x, self.snake.head.rect.y)
+        if (self.snake.head.rect.x < 10 or 
+            self.snake.head.rect.x >= self.screen.get_width() - 10 or 
+            self.snake.head.rect.y < 10 or 
+            self.snake.head.rect.y >= self.screen.get_height() - 10):
             self.is_game_over = True
+            print("gameover")
     
     def check_self_collision(self):
+        all_pos = []
+        head = self.snake.head
+        head_pos = (head.rect.x, head.rect.y)
         for segment in self.snake.segments[1:]:
-            if self.snake.head.rect.colliderect(segment.rect):
+            pos = (segment.rect.x, segment.rect.y)
+            if pos == head_pos:
                 self.is_game_over = True
+                print(all_pos)
+                print("GAMMMMMEEEEEEE OVERERERERER")
+            # if self.snake.head.rect.colliderect(segment.rect):
+            #     self.is_game_over = True
+            #     print("gameover")
+
 
     def run(self):
         time.sleep(0.1)
@@ -62,15 +75,17 @@ class SuperSnake:
         self.check_wall_collision()
         self.check_self_collision()
 
+        if self.is_game_over:
+            # self.screen.blit(pygame.transform.scale(const.font["GAMEOVER"].render("Game Over", False, pygame.Color(255, 0, 0), None), (self.screen.get_width() // 2 + 100 ,100)), (200, 100))
+            return 
+
 
 class Snake:
     def __init__(self, tile_size):
         self.segments = []
         self.tile_size = tile_size
         # Start the snake at the center of the grid
-        for position in [(tile_size * 8, tile_size * 8), 
-                         (tile_size * 7, tile_size * 8), 
-                         (tile_size * 6, tile_size * 8)]:
+        for position in [(tile_size * i, tile_size * 8) for i in range(8, 5, -1)]:
             new_seg = Segment(pos=position, tile_size=tile_size, heading=0)
             self.segments.append(new_seg)
         self.head = self.segments[0]
@@ -154,8 +169,8 @@ class Food:
         self.randomize_position()
 
     def randomize_position(self):
-        self.rect.x = randint(0, (self.screen_width // self.tile_size) - 1) * self.tile_size
-        self.rect.y = randint(0, (self.screen_height // self.tile_size) - 1) * self.tile_size
+        self.rect.x = randint(3, (self.screen_width // self.tile_size) - 5) * self.tile_size
+        self.rect.y = randint(3, (self.screen_height // self.tile_size) - 5) * self.tile_size
 
     def update(self, screen):
         screen.blit(self.img, self.rect.topleft)
