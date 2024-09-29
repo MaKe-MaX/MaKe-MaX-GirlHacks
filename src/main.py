@@ -1,0 +1,20 @@
+import pygame
+import sys
+import asyncio
+from game_control import run
+
+pygame.mixer.init()
+sound = pygame.mixer.Sound('assets/music/track1.mp3')
+sound.play()
+
+async def main():
+    while True:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        run()
+        await asyncio.sleep(0)
+
+asyncio.run(main())

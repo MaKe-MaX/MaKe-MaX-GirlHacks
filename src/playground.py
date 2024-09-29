@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from lib.entity import Entity
-import lib.const as const
+import const
 from lib.player import Player 
 # from lib.renderer import Renderer
 
