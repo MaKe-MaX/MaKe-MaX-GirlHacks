@@ -4,16 +4,18 @@ import lib.const as const
 
 class Entity(pygame.sprite.Sprite):
 
-    def __init__(self, name="", pos=(0,0), size=(50, 50), color=const.color["WHITE"], callbacks={}, 
-                 clickable=False, collidable=False):
+    def __init__(self, name="", pos=(0,0), size=(50, 50), color=const.color["WHITE"], on_click = None, 
+                 clickable=False, img_path=None):
         super().__init__()
-        self.callbacks = callbacks
+        self.on_click = on_click
         self.clickable = clickable
-        self.collidable = collidable
         self.name = name
 
         self.image = pygame.Surface(size)
         self.image.fill(color)
+        if img_path != None:
+            self.img = pygame.image.load(img_path)
+            self.img = pygame.transform.scale(self.img, size)
 
         pygame.draw.rect(self.image, color, pygame.Rect(pos[0], pos[1], size[0], size[1]))
 
@@ -35,7 +37,7 @@ class Entity(pygame.sprite.Sprite):
             if e.TYPE == pygame.MOUSEBUTTONUP:
                 # click
                 if (self.rect.collidepoint(e.x, e.y)):
-                    self.callbacks["on_click"](self)
+                    self.on_click(self)
                 
         # # collide
         # collide_ent_pos = (collide_ent.oygame_obj.x, collide_ent.pygame_obj.y)

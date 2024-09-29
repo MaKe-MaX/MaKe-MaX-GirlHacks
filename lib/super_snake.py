@@ -2,8 +2,8 @@ import pygame
 from random import randint
 import const
 
-from ..game import Game
-from ..entity import Entity
+from game import Game
+from entity import Entity
 
 class SuperSnake(Game):
 
@@ -35,4 +35,3 @@ class Snake:
     def move(self):
         for seg_num in range(len(self.segments)-1, 0, -1):
             self.segments.pos = self.segments[seg_num-1].pos
-            

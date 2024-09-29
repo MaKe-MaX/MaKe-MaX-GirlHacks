@@ -10,7 +10,7 @@ from lib.renderer import Renderer
 
 playground_rend = Renderer()
 
-running = True
+running = False
 
 rect = pygame.Rect(300, 300, 50, 50)
 ent = Entity("test_entity", rect)
@@ -25,6 +25,18 @@ ent2 = Entity("Ent1", size = (50, 50))
 
 ent2.rect.x = 200
 ent2.rect.y = 200
+
+def func(**kwargs):
+    kwargs_new = []
+
+    for kw in kwargs:
+        if (kw != "dont_include_this"):
+            kwargs_new.append(kw)
+        print(kw)
+    
+    print(kwargs_new)
+
+func(hello = 2, why = 9, dont_include_this = 4)
 
 while running:
     for event in pygame.event.get():
@@ -44,8 +56,6 @@ while running:
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             print("right")
             ent1.rect.x += vel
-
-
 
     # surface.blit(playground_rend.screen, (10, 10))
     playground_rend.display_text([("Hello world!", const.color['WHITE'], (200, 200))])

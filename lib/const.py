@@ -1,7 +1,6 @@
 
 import pygame
 color = {
-        "BLACK": pygame.Color(0, 0, 0), 
         "RED": pygame.Color(200, 0, 6),
         "WHITE": pygame.Color(223,224,221),
         "YELLOW": pygame.Color(215, 216, 54),
@@ -12,6 +11,11 @@ color = {
         "BLUE": pygame.Color(6, 222, 242),
         "PURPLE": pygame.Color(156,3,233),
         "ORANGE": pygame.Color(245, 95, 31)
+}
+
+dark_color = {
+    "BLACK": pygame.Color(0, 0, 0), 
+    "GRAY": pygame.Color(100, 100, 100)
 }
 
 frame_rate = 12

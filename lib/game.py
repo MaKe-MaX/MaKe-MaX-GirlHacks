@@ -1,13 +1,12 @@
 import pygame
 import sys
 import asyncio
-import lib
-import renderer
-import const
+from lib.renderer import Renderer
+import lib.const as const
 
 class Game:
 
-    ourRenderer = renderer.Renderer()
+    ourRenderer = Renderer()
 
     def __init__(self, name):
         self.name = name
@@ -15,9 +14,11 @@ class Game:
         self.high_score = 0
         self.is_game_over = False
     
-    def run():
+    # Virtual Function
+    def run(self):
         pass
 
+    # Main game loop
     def loop(self):
 
         # Main game loop
@@ -39,9 +40,9 @@ class Game:
         play_again_pos = (self.window_width // 2 - 150, self.window_height // 2)
         return_arcade = (self.window_width // 2 - 150, self.window_height // 2 + 50)
 
-        textObjs = [("GAMEOVER", lib.variables.color["WHITE"], game_over_pos,), 
-                    ("Play Again", lib.variables.color["WHITE"], play_again_pos), 
-                    ("Return to Arcade", lib.variables.color["WHITE"], return_arcade)]
+        textObjs = [("GAMEOVER", const.color["WHITE"], game_over_pos,), 
+                    ("Play Again", const.color["WHITE"], play_again_pos), 
+                    ("Return to Arcade", const.color["WHITE"], return_arcade)]
 
         Game.ourRenderer.display_text(textObjs)
 
