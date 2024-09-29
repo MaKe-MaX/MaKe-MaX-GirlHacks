@@ -1,5 +1,7 @@
-
 import pygame
+import os
+import math
+
 color = {
         "RED": pygame.Color(200, 0, 6),
         "WHITE": pygame.Color(223,224,221),
@@ -18,7 +20,11 @@ dark_color = {
     "GRAY": pygame.Color(100, 100, 100)
 }
 
-frame_rate = 12
+alpha_color = {
+    "TRANSPARENT": pygame.Color(0, 0, 0, 0)
+}
+
+FRAME_RATE = 12
 
 default_player_size = (50, 50)
 

@@ -13,13 +13,21 @@ class Entity(pygame.sprite.Sprite):
 
         self.image = pygame.Surface(size)
         self.image.fill(color)
+        
+        self.image.set_colorkey(const.dark_color["BLACK"])
+        print(img_path)
+
         if img_path != None:
-            self.img = pygame.image.load(img_path)
+            self.img = pygame.image.load(img_path).convert_alpha()
             self.img = pygame.transform.scale(self.img, size)
+            # self.image.blit(self.img, (pos[0] + size[0] // 2, pos[1] + size[1] // 2))
+            self.image.blit(self.img, (0, 0))
 
         pygame.draw.rect(self.image, color, pygame.Rect(pos[0], pos[1], size[0], size[1]))
-
+        
         self.rect = self.image.get_rect()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
 
     def update(self, events):
         # x = self.pygame_obj.x
