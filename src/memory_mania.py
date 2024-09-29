@@ -41,9 +41,12 @@ class Tile:
 
 class MemoryMania:
     score = 0
+    tile_margin = 10
+    tile_size = 50
+    Tile.size = tile_size
 
     def __init__(self, screen):
-        pos = MemoryMania.__generate_tile_pos(screen.get_width() // 2, screen.get_height() // 2)
+        pos = MemoryMania.__generate_tile_pos({"x": screen.get_width() // 2, "y": screen.get_height() // 2})
         colors = set(const.color.values())
         self.tiles = [Tile(i, pos[i], colors.pop(), self.__tile_callback) for i in range(0, 9)]
         self.correct_sequence = []
@@ -51,14 +54,18 @@ class MemoryMania:
         self.waiting = False
         self.need_to_evaluate = False
 
-    def run(self):
+    def update(self):
+        for tile in self.tiles:
+            tile.update()
+            self.screen.blit(tile.image, (tile.x, tile.y))
+
         if (not self.waiting):
             # choose next tile
             chosen_tile_num = random.randint(0, 8)
-            self.chosen_sequence.append(chosen_tile_num)
+            self.correct_sequence.append(chosen_tile_num)
 
             # show sequence
-            for n in self.chosen_sequence:
+            for n in self.correct_sequence:
                 self.tiles[n].turn_on()
                 time.sleep(self.tile_sleep)
                 self.tiles[n].turn_off()
@@ -67,24 +74,28 @@ class MemoryMania:
             # let user click
             for tile in self.tiles:
                 tile.enable()
+            
+            self.waiting = True
 
         if (self.need_to_evaluate):
             self.need_to_evaluate = False
 
             # compare sequences
-            for i in range(len(self.chosen_sequence)):
-                if (self.player_sequence[i] != self.chosen_sequence[i]):
-                    self.is_game_over = True 
+            for i in range(len(self.correct_sequence)):
+                if (self.player_sequence[i] != self.correct_sequence[i]):
+                    self.is_game_over = True
+                    return
+                
+            for tile in self.tiles:
+                tile.disable()
+                tile.turn_off()
 
-    def update(self):
-        for tile in self.tiles:
-            tile.update()
-            self.screen.blit(tile.image, (tile.x, tile.y))
+            score += len(self.correct_sequence) * 10
 
     def __tile_callback(self, tile):
         tile.turn_on()
-        if len(self.player_sequence) < len(self.chosen_sequence):
-            self.player_sequence.append(tile.number)
+        if len(self.player_sequence) < len(self.correct_sequence):
+            self.player_sequence.append(tile.num)
         else:
             tile.disable()
             self.need_to_evaluate = True

@@ -1,6 +1,8 @@
 import pygame, sys, os
 from arcade import Arcade
 from disco_dance import DiscoDance
+from memory_mania import MemoryMania
+from super_snake import SuperSnake
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
@@ -20,15 +22,27 @@ def game_over_screen(score):        # returns whether to restart
                     return True
                 if keys[pygame.K_h]:
                     return False
+                pygame.mixer.init()
+                sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                sound.play()
 
 def quit_management():
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
+            pygame.mixer.init()
+            sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            sound.play()
             return True
         if event.type == pygame.KEYDOWN:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_m]:
+                pygame.mixer.init()
+                sound = pygame.mixer.Sound('../assets/music/track1.mp3')
+                pygame.mixer.music.set_volume(0.5)
+                sound.play()
                 return True
 
 # --------------- Main Game Loop  -------------- #
@@ -37,8 +51,12 @@ def run():
     # ------- player image & walking frames ------- #
     file_names = [f'../assets/player/{i}.png' for i in range(1,5)]
     frame = 0
+
+    
+
+    floor_list = [pygame.image.load("../assets/arcade/disco_floor1.png")]*6  + [pygame.image.load(f"../assets/arcade/disco_floor2.png")]*6
     left = [pygame.image.load(file_names[0])]*5 + [pygame.image.load(file_names[1])]*1 + [pygame.image.load(file_names[2])]*5 + [pygame.image.load(file_names[3])]*1
-    right = [pygame.transform.flip(pygame.image.load(file_names[0]), True, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[1]), True, False)]*1 + [pygame.transform.flip(pygame.image.load(file_names[2]), True, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[3]), True, False)]*1
+    right = [pygame.transform.flip(pygame.image.load(file_names[0]), True, False)]*5 + [pygame.transform.flip(pygame.image.load(file_names[1]), True, False)]*1 + [pygame.transform.flip(pygame.image.load(file_names[2]), True, False)]*5 + [pygame.transform.flip(pygame.image.load(file_names[3]), True, False)]*1
     imgList = left
     guy = pygame.transform.scale(imgList[frame], (200, 200))
     rect = guy.get_rect()
@@ -98,6 +116,8 @@ def run():
         guy = pygame.transform.scale(imgList[frame], (200, 200))
         
         screen.fill(pygame.Color(0, 0, 0))
+        
+        screen.blit(pygame.transform.scale(floor_list[frame], (screen.get_width(), screen.get_height())), (0,0))
         rect.x = x
         rect.y = y
         
@@ -106,28 +126,12 @@ def run():
         memory_result = memoryArcade.update(screen, x, y)
         
         if snake_result:
+            pygame.mixer.stop()
             game_over = False
             try_again = True
             quit = False
             while try_again:
-                while not game_over:
-                    if quit_management():
-                        quit = True
-                        break
-
-                    # here is code of the game
-                    
-                    screen.fill(pygame.Color(255, 0, 255))
-                    clock.tick(12)
-                    pygame.display.update()
-                if not quit and not game_over_screen(0):
-                    try_again = False
-        elif dance_result:
-            game_over = False
-            try_again = True
-            quit = False
-            inst = DiscoDance(screen)
-            while try_again:
+                inst = SuperSnake(screen)
                 while not game_over:
                     if quit_management():
                         quit = True
@@ -135,16 +139,37 @@ def run():
 
                     # here is code of the game
                     inst.run()
+                    screen.fill(pygame.Color(255, 0, 255))
+                    clock.tick(12)
+                    pygame.display.update()
+                if not quit and not game_over_screen(0):
+                    try_again = False
+        elif dance_result:
+            pygame.mixer.stop()
+            game_over = False
+            try_again = True
+            quit = False
+            while try_again:
+                inst = DiscoDance(screen)
+                while not game_over:
+                    if quit_management():
+                        quit = True
+                        break
+
+                    # here is code of the game
                     screen.fill(pygame.Color(0, 0, 255))
+                    inst.run()
                     clock.tick(12)
                     pygame.display.update()
                 if not quit and not game_over_screen(0):
                     try_again = False
         elif memory_result:
+            pygame.mixer.stop()
             game_over = False
             try_again = True
             quit = False
             while try_again:
+                mem_game = MemoryMania(screen)
                 while not game_over:
                     if quit_management():
                         quit = True
@@ -152,6 +177,7 @@ def run():
 
                     # here is code of the game
                     
+                    mem_game.update()
                     screen.fill(pygame.Color(255, 0, 255))
                     clock.tick(12)
                     pygame.display.update()
