@@ -8,14 +8,13 @@ from lib.game import Game
 class Player(Entity):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        print(os.path.join("assets/player", "1.png"))
         file_names = [os.path.join('assets/player', f'{i}.png') for i in range(1,5)]
         self.left = [pygame.transform.flip(pygame.image.load(file_names[0]), False, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[1]), False, False)]*1 + [pygame.transform.flip(pygame.image.load(file_names[2]), False, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[3]), False, False)]*1
         self.right = [pygame.transform.flip(pygame.image.load(file_names[0]), True, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[1]), True, False)]*1 + [pygame.transform.flip(pygame.image.load(file_names[2]), True, False)]*4 + [pygame.transform.flip(pygame.image.load(file_names[3]), True, False)]*1
         self.frame = 0
 
         self.imgList = self.left
-        self.img = self.imgList[self.frme]
+        self.img = self.imgList[self.frame]
 
         self.img_pos = [0,0]
         self.movementY = [False, False]

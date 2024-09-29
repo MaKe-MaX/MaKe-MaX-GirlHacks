@@ -51,7 +51,7 @@ class Renderer:
         """
         Updates the screen with the displayed types\n
         """
-        rectList.update()
+        # [rect.update() for rect in rectList]
         # Update the display
         pygame.display.flip()
     
