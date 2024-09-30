@@ -1,8 +1,8 @@
 import pygame,os
 
 class Arcade:
-    size = 150
-    action_dist = 150
+    size = 200
+    action_dist = 160
 
     def __init__(self, name, pos):
         self.x = pos[0]
