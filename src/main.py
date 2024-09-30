@@ -102,7 +102,7 @@ async def main():
         is_left = keys[pygame.K_a] or keys[pygame.K_LEFT]
         is_right = keys[pygame.K_d] or keys[pygame.K_RIGHT]
 
-        # ----- normalize velocity for diagonal movement ----- #
+        # ----- normalize velocity for diagonal movement to a magntitude of 12----- #
         if is_up and is_left:
             y -= vel/(2 ** 0.5)
             x -= vel/(2 ** 0.5)
@@ -140,7 +140,7 @@ async def main():
         snake_result = snakeArcade.update(screen, x, y)
         dance_result = danceArcade.update(screen, x, y)
         memory_result = memoryArcade.update(screen, x, y)
-        
+
         if snake_result:
             pygame.mixer.stop()
             game_over = False
