@@ -31,11 +31,13 @@ class Tile:
 
     def update(self, events):
         if not self.enabled:
+            print("not enabled")
             return
+        events = pygame.event.get()
 
         for e in events:
             if e.type == pygame.MOUSEBUTTONDOWN:
-                if (e.pos[0] > self.x and e.pos[0] < self.x + Tile.size and e.pos[1] > self.y and e.pos[1] < self.y + Tile.size):
+                if (e.x > self.x and e.x < self.x + Tile.size and e.y > self.y and e.y < self.y + Tile.size):
                     self.callback(self)
 
 class MemoryMania:
@@ -118,6 +120,7 @@ class MemoryMania:
             self.score += len(self.correct_sequence) * 10
 
     def __tile_callback(self, tile):
+        print("clicked")
         tile.turn_on()
         print('NUMBER', tile.num)
         # print("pl vs co seq", len(self.player_sequence), len(self.correct_sequence))
